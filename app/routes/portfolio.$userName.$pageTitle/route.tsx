@@ -3,19 +3,16 @@ import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 
-import Footer from "~/components/Footer";
 import HorizontalNavBar from "~/components/HorizontalNavBar";
 import ContactBox from "~/components/ContactBox";
 import Paragraph from "~/components/Paragraph";
 import SkillsTable from "~/components/SkillsTable";
 import BlogPostGallery from "~/components/BlogPostGallery";
 import Text from "~/components/Text";
+import Footer from "~/components/Footer";
 
-import {
-  getPageByUserIdAndTitle,
-  getPageTitlesByUserId,
-} from "~/models/page.server";
 import { getBlocksByPageId, processBlocks } from "~/models/block.server";
+import { getPageByUserIdAndTitle, getPageTitlesByUserId } from "~/models/page.server";
 import type {
   BlogPostGalleryProps,
   ContactBoxProps,

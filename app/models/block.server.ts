@@ -1,12 +1,12 @@
+import axios from "axios";
+
 import { prisma } from "~/db.server";
-import { getUserById } from "~/models/user.server";
 import { getUserSkillByUserIdAndSkill } from "~/models/skill.server";
 import {
   getUrlByUserIdAndWebsiteType,
   getLogoUrlByWebsiteType,
 } from "~/models/website.server";
-
-import axios from "axios";
+import { getUserById } from "~/models/user.server";
 
 // types from the parsed version of the original block
 export interface JsonSkillsTableProps {
@@ -290,17 +290,15 @@ export async function processContactBoxBlock(
   const resultWebsites: ResultWebsite[] = [];
 
   if (blockProperties.websites) {
-    for (let i = 0; i < blockProperties.websites.length; i++) {
+    for (const website of blockProperties.websites) {
       const userWebsiteUrl = await getUrlByUserIdAndWebsiteType(
         userId,
-        blockProperties.websites[i],
+        website,
       );
-      const websiteLogo = await getLogoUrlByWebsiteType(
-        blockProperties.websites[i],
-      );
+      const websiteLogo = await getLogoUrlByWebsiteType(website);
       if (userWebsiteUrl !== null && websiteLogo !== null) {
         resultWebsites.push({
-          type: blockProperties.websites[i],
+          type: website,
           url: userWebsiteUrl.url,
           logoUrl: websiteLogo.logoUrl,
         });
@@ -410,10 +408,10 @@ export async function processBlogPostGalleryBlock(
           day: "numeric",
           year: "numeric",
         }),
-        contentStart: articleMarkdown
-          .substring(indexOfContent, indexOfContent + 300)
-          .replace(/[\#\>]/, "")
-          .substring(0, 300 - articleInfo.subtitle.length),
+        contentStart: articleMarkdown.substring(
+          indexOfContent,
+          indexOfContent + 300 - articleInfo.subtitle.length,
+        ),
         articleUrl: articleInfo.url,
         topTag: articleInfo.tags?.[0],
       };
