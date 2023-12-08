@@ -2,11 +2,11 @@ import axios from "axios";
 
 import { prisma } from "~/db.server";
 import { getUserSkillByUserIdAndSkill } from "~/models/skill.server";
+import { getUserById } from "~/models/user.server";
 import {
   getUrlByUserIdAndWebsiteType,
   getLogoUrlByWebsiteType,
 } from "~/models/website.server";
-import { getUserById } from "~/models/user.server";
 
 // types from the parsed version of the original block
 export interface JsonSkillsTableProps {

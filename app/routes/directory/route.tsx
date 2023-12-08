@@ -1,7 +1,6 @@
 import { json } from "@remix-run/node";
 import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import { Form, NavLink, LiveReload, Outlet, Scripts, ScrollRestoration, useLoaderData, useNavigation, useSubmit } from "@remix-run/react";
-
 import { useEffect, useState } from "react";
 
 import { getUsers } from "~/models/user.server";
