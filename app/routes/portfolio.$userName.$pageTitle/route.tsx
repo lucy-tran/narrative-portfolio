@@ -3,15 +3,13 @@ import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import invariant from "tiny-invariant";
 
-import ContactBox from "~/components/ContactBox";
 import BlogPostGallery from "~/components/BlogPostGallery";
+import ContactBox from "~/components/ContactBox";
+import Footer from "~/components/Footer";
+import HorizontalNavBar from "~/components/HorizontalNavBar";
 import Paragraph from "~/components/Paragraph";
 import SkillsTable from "~/components/SkillsTable";
 import Text from "~/components/Text";
-import Footer from "~/components/Footer";
-import HorizontalNavBar from "~/components/HorizontalNavBar";
-import { getBlocksByPageId, processBlocks } from "~/models/block.server";
-import { getPageByUserIdAndTitle, getPageTitlesByUserId } from "~/models/page.server";
 import type {
   BlogPostGalleryProps,
   ContactBoxProps,
@@ -21,6 +19,8 @@ import type {
   SkillsTableProps,
   TextProps,
 } from "~/models/block.server";
+import { getBlocksByPageId, processBlocks } from "~/models/block.server";
+import { getPageByUserIdAndTitle, getPageTitlesByUserId } from "~/models/page.server";
 import { getUserByUsername } from "~/models/user.server";
 
 async function loadPageBlocks(
