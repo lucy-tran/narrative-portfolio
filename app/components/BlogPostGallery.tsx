@@ -20,6 +20,7 @@ export default function BlogPostGallery({
                   <a
                     href={article.articleUrl}
                     target="_blank"
+                    rel="noreferrer"
                     title=""
                     className="block aspect-[3/2]"
                   >
@@ -48,6 +49,7 @@ export default function BlogPostGallery({
                     <a
                       href={article.articleUrl}
                       target="_blank"
+                      rel="noreferrer"
                       title=""
                       className="text-black font-serif"
                     >
@@ -65,6 +67,7 @@ export default function BlogPostGallery({
                 <a
                   href={article.articleUrl}
                   target="_blank"
+                  rel="noreferrer"
                   title=""
                   className="font-sans inline-flex items-center justify-center pb-0.5 mt-5 text-base font-semibold text-blue-600 transition-all duration-200 border-b-2 border-transparent hover:border-blue-600 focus:border-blue-600"
                 >

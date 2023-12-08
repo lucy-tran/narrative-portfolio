@@ -1,6 +1,6 @@
 import { Prisma, PrismaClient } from "@prisma/client";
+
 import bcrypt from "bcryptjs";
-import { text } from "node:stream/consumers";
 
 const prisma = new PrismaClient();
 
@@ -14,7 +14,7 @@ async function seed() {
 
   const hashedPassword = await bcrypt.hash("fakepassword", 10);
 
-  let skills: Prisma.SkillCreateInput[] = [
+  const skills: Prisma.SkillCreateInput[] = [
     {
       skillName: "HTML5",
       type: "tech skill",
@@ -69,7 +69,7 @@ async function seed() {
     }),
   );
 
-  let websiteTypes: Prisma.WebsiteCreateInput[] = [
+  const websiteTypes: Prisma.WebsiteCreateInput[] = [
     {
       type: "LinkedIn",
       logoUrl: "https://img.icons8.com/ios/100/linkedin.png",
@@ -104,7 +104,7 @@ async function seed() {
     }),
   );
 
-  let blockTypes: Prisma.BlockTypeCreateInput[] = [
+  const blockTypes: Prisma.BlockTypeCreateInput[] = [
     { type: "H1" },
     { type: "H2" },
     { type: "H3" },
@@ -297,7 +297,8 @@ async function seed() {
     },
   ];
 
-  const page1 = await prisma.page.create({
+  // Page 1
+  await prisma.page.create({
     data: {
       userId: user.id,
       order: 1,
@@ -312,7 +313,8 @@ async function seed() {
     },
   });
 
-  const page2 = await prisma.page.create({
+  // Page 2
+  await prisma.page.create({
     data: {
       userId: user.id,
       order: 2,
@@ -327,7 +329,8 @@ async function seed() {
     },
   });
 
-  const page3 = await prisma.page.create({
+  // Page 3
+  await prisma.page.create({
     data: {
       userId: user.id,
       order: 3,
@@ -342,7 +345,8 @@ async function seed() {
     },
   });
 
-  const page4 = await prisma.page.create({
+  // Page 4
+  await prisma.page.create({
     data: {
       userId: user.id,
       order: 4,
@@ -357,7 +361,8 @@ async function seed() {
     },
   });
 
-  const page5 = await prisma.page.create({
+  // Page 5
+  await prisma.page.create({
     data: {
       userId: user.id,
       order: 5,
@@ -372,7 +377,8 @@ async function seed() {
     },
   });
 
-  const page6 = await prisma.page.create({
+  // Page 6
+  await prisma.page.create({
     data: {
       userId: user.id,
       order: 6,
@@ -387,7 +393,8 @@ async function seed() {
     },
   });
 
-  const page7 = await prisma.page.create({
+  await prisma.page.create({
+    // Page 7
     data: {
       userId: user.id,
       order: 7,

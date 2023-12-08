@@ -2,8 +2,9 @@ import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData, Link } from "@remix-run/react";
 
-import { getUserByUsername } from "~/models/user.server";
 import invariant from "tiny-invariant";
+
+import { getUserByUsername } from "~/models/user.server";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   invariant(params.userName, "Missing userName param");

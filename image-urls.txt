@@ -10,5 +10,5 @@ hero-2: https://github.com/lucy-tran/lucytran-portfolio/assets/54861558/fdc11aed
 hero-3: https://github.com/lucy-tran/lucytran-portfolio/assets/54861558/5376ac75-6eb8-4ddf-a3a5-3ee9a96fa603
 
 My Medium integration token: 281fec78ea5e3c607381a9e7af080a7ca25c5e3ff3ffb92abd8c304f1ae4d27d0
-
+Fly access token: fo1_8rz-c7r2eqJ2U7affEOO3HJN0j63DInyog3eV-JlQSc
 

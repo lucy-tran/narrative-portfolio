@@ -7,8 +7,6 @@ import {
 } from "@remix-run/react";
 import { AnimatePresence, motion } from "framer-motion";
 
-import Footer from "~/components/Footer";
-
 export default function UserPortfolio() {
   return (
     <AnimatePresence mode="wait" initial={false}>

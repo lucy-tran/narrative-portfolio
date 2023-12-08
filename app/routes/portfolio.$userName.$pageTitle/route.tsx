@@ -1,10 +1,16 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { useEffect, useState } from "react";
 import invariant from "tiny-invariant";
 
-import { getUserByUsername } from "~/models/user.server";
+import Footer from "~/components/Footer";
+import HorizontalNavBar from "~/components/HorizontalNavBar";
+import ContactBox from "~/components/ContactBox";
+import Paragraph from "~/components/Paragraph";
+import SkillsTable from "~/components/SkillsTable";
+import BlogPostGallery from "~/components/BlogPostGallery";
+import Text from "~/components/Text";
+
 import {
   getPageByUserIdAndTitle,
   getPageTitlesByUserId,
@@ -19,24 +25,17 @@ import type {
   SkillsTableProps,
   TextProps,
 } from "~/models/block.server";
-
-import Footer from "~/components/Footer";
-import HorizontalNavBar from "~/components/HorizontalNavBar";
-import Text from "../../components/Text";
-import ContactBox from "../../components/ContactBox";
-import Paragraph from "../../components/Paragraph";
-import SkillsTable from "../../components/SkillsTable";
-import BlogPostGallery from "~/components/BlogPostGallery";
+import { getUserByUsername } from "~/models/user.server";
 
 async function loadPageBlocks(
   userId: number,
   pageId: number,
 ): Promise<ResultBlock[]> {
   try {
-    let jsonBlocks: JsonBlock[] = await getBlocksByPageId(pageId);
-    let resultBlocks: ResultBlock[] = await processBlocks(jsonBlocks, userId);
+    const jsonBlocks: JsonBlock[] = await getBlocksByPageId(pageId);
+    const resultBlocks: ResultBlock[] = await processBlocks(jsonBlocks, userId);
     return resultBlocks;
-  } catch (error: any) {
+  } catch (error) {
     console.log(error);
     throw new Response("Not Found", { status: 404 });
   }
@@ -63,8 +62,7 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 };
 
 export default function PortfolioPage() {
-  const { user, pageTitles, currentPage, blocks } =
-    useLoaderData<typeof loader>();
+  const { pageTitles, currentPage, blocks } = useLoaderData<typeof loader>();
 
   const nextPageTitle =
     currentPage.order + 1 <= pageTitles.length
@@ -84,6 +82,7 @@ export default function PortfolioPage() {
             currentPage.bgImage ??
             "https://github.com/lucy-tran/lucytran-portfolio/assets/54861558/5376ac75-6eb8-4ddf-a3a5-3ee9a96fa603"
           }
+          alt="background"
           className="z-[-1] absolute top-0 left-0 h-full w-full object-cover"
         />
         <div className="absolute bottom-12 w-full flex flex-col align-center justify-center gap-8">

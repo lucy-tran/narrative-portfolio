@@ -1,4 +1,5 @@
 import { json } from "@remix-run/node";
+import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
 import {
   Form,
   NavLink,
@@ -11,10 +12,11 @@ import {
   useSubmit,
 } from "@remix-run/react";
 
-import type { LinksFunction, LoaderFunctionArgs } from "@remix-run/node";
-import appStyleSheet from "./directory.css";
-import { getUsers } from "~/models/user.server";
 import { useEffect, useState } from "react";
+
+import { getUsers } from "~/models/user.server";
+
+import appStyleSheet from "./directory.css";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: appStyleSheet },

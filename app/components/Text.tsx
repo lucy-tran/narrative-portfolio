@@ -40,6 +40,7 @@ export default function Text({
                 key={index}
                 href={child.embeddedUrl}
                 target="_blank"
+                rel="noreferrer"
                 className={`inline text-blue-500 hover:text-blue-800 hover:cursor-pointer ${bold} ${italics} ${underline} ${textClasses}`}
               >
                 {child.text}

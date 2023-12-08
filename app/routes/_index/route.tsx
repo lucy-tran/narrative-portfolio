@@ -10,6 +10,7 @@ export default function Index() {
   return (
     <div className="h-screen w-full">
       <img
+        alt="background"
         src="https://github.com/lucy-tran/lucytran-portfolio/assets/54861558/20ac45d4-3f2f-4030-a9c8-404d8112dba0"
         className="absolute z-[-1] w-full h-full bg-white opacity-50 object-cover"
       />

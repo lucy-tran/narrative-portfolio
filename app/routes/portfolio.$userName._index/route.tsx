@@ -2,9 +2,10 @@ import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData, Link } from "@remix-run/react";
 
-import { getUserByUsername } from "~/models/user.server";
-import { getPageTitleByUserIdAndOrder } from "~/models/page.server";
 import invariant from "tiny-invariant";
+
+import { getPageTitleByUserIdAndOrder } from "~/models/page.server";
+import { getUserByUsername } from "~/models/user.server";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   invariant(params.userName, "Missing userName param");
@@ -38,7 +39,7 @@ export default function PortfolioHome() {
                 className="inline-flex justify-center lg:justify-left items-center px-6 py-4 mt-8 lg:mt-16 font-serif duration-500 bg-gray-200 border-2 border-gray-500 text-2xl rounded-full hover:bg-white hover:text-black hover:translate-x-4 hover:-translate-y-2"
                 role="button"
               >
-                OK, let's see how it'll go!
+                OK, let&apos;s see how it&apos;ll go!
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"

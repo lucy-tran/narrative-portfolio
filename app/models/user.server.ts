@@ -3,8 +3,9 @@ import bcrypt from "bcryptjs";
 import { matchSorter } from "match-sorter";
 
 import { prisma } from "~/db.server";
+export type { User };
 
-type UserResult = {
+interface UserResult {
   id: number;
   firstName?: string | null;
   lastName?: string | null;
@@ -13,7 +14,7 @@ type UserResult = {
   profilePic?: string | null; // shown on the landing page
   bio?: string | null; // used as the big title for the landing page
   intro?: string | null; // used as the big title for the landing page
-};
+}
 
 export async function getUsers(
   query?: string | null,

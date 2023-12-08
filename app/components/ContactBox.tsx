@@ -1,4 +1,5 @@
 import { Form } from "@remix-run/react";
+
 import { ContactBoxProps } from "~/models/block.server";
 
 export default function ContactBox({
@@ -19,6 +20,7 @@ export default function ContactBox({
               <img
                 src="https://img.icons8.com/ios/100/apple-phone.png"
                 className="w-8 h-8"
+                alt="phone"
               />
               <p className="font-sans font-light text-lg pl-4">
                 {properties.phone}
@@ -28,7 +30,7 @@ export default function ContactBox({
           {properties.websites?.map(
             (website: { logoUrl: string; url: string }, index: number) => (
               <div key={index} className="w-full inline-flex items-center">
-                <img src={website.logoUrl} className="w-8 h-8" />
+                <img src={website.logoUrl} className="w-8 h-8" alt="website" />
                 <p className="font-sans font-light text-lg pl-4">
                   {website.url}
                 </p>
@@ -52,7 +54,11 @@ export default function ContactBox({
           </Form>
         </div>
         <div className="w-full sm:w-1/2 md:w-1/3 aspect-square flex items-center justify-center mb-4">
-          <img src={properties.image} className="rounded-full object-cover" />
+          <img
+            src={properties.image}
+            className="rounded-full object-cover"
+            alt="profile-pic"
+          />
         </div>
       </div>
     </div>

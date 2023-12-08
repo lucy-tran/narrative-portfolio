@@ -1,6 +1,8 @@
 import { Carousel } from "@material-tailwind/react";
-import Text from "./Text";
+
 import type { ParagraphProps, ResultProperties } from "~/models/block.server";
+
+import Text from "./Text";
 
 export default function Paragraph({
   order,
@@ -23,7 +25,7 @@ export default function Paragraph({
         <img
           key={index}
           src={image}
-          alt={`Image ${index + 1}`}
+          alt={index.toString()}
           className="h-full w-full object-cover rounded-xl"
         />
       ))}

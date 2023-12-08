@@ -1,32 +1,33 @@
 import { prisma } from "~/db.server";
+import { getUserById } from "~/models/user.server";
 import { getUserSkillByUserIdAndSkill } from "~/models/skill.server";
 import {
   getUrlByUserIdAndWebsiteType,
   getLogoUrlByWebsiteType,
 } from "~/models/website.server";
-import { getUserById } from "~/models/user.server";
+
 import axios from "axios";
 
 // types from the parsed version of the original block
-export type JsonSkillsTableProps = {
+export interface JsonSkillsTableProps {
   techSkills: string[];
   softSkills: string[];
-};
+}
 
-export type JsonContactBoxProps = {
+export interface JsonContactBoxProps {
   headline?: string; // sth like ‘Contact me’ or ‘Let’s connect’
   image?: string; // default = the url to the profilePic
   phone?: string;
   websites?: string[];
   hasEmailForm: boolean;
-};
+}
 
-export type JsonBlogPostGalleryProps = {
+export interface JsonBlogPostGalleryProps {
   mediumUsername: string;
   numPosts: number;
-};
+}
 
-export type JsonProperties = {
+export interface JsonProperties {
   text?: string;
   align?: string;
   embeddedUrl?: string;
@@ -43,9 +44,9 @@ export type JsonProperties = {
   bold?: boolean;
   italics?: boolean;
   underline?: boolean;
-};
+}
 
-export type JsonBlock = {
+export interface JsonBlock {
   id: string;
   pageId: number;
   order: number; // its order among all blocks in the page, not among its siblings
@@ -53,10 +54,10 @@ export type JsonBlock = {
   properties: JsonProperties;
   childrenContent?: JsonProperties[] | undefined;
   parentId?: string | null;
-};
+}
 
 // types for storing the blocks that are returned to the frontend
-export type TextProps = {
+export interface TextProps {
   // H1, H2, H3, Text
   text?: string;
   align: "left" | "center" | "right" | "justify";
@@ -64,63 +65,63 @@ export type TextProps = {
   bold?: boolean;
   italics?: boolean;
   underline?: boolean;
-};
+}
 
-export type BulletedItemProps = {
+export interface BulletedItemProps {
   text?: string;
   align: "left" | "center" | "right" | "justify";
-};
+}
 
-export type NumberedItemProps = {
+export interface NumberedItemProps {
   number: number;
   text?: string;
   align: "left" | "center" | "right" | "justify";
-};
+}
 
-export type ToggleProps = {
+export interface ToggleProps {
   text?: string;
   align: "left" | "center" | "right" | "justify";
-};
+}
 
-export type ParagraphProps = {
+export interface ParagraphProps {
   text?: string;
   align: "left" | "center" | "right" | "justify";
   images?: string[];
-};
+}
 
-export type ResultSkill = {
+export interface ResultSkill {
   skillName: string;
   level?: string | null;
-};
+}
 
-export type SkillsTableProps = {
+export interface SkillsTableProps {
   // will be auto-filled based on the User’s skills, but the user can choose to hide/display specific skills in this block
   techSkills: ResultSkill[]; // a stringified json array of UserSkill ids
   softSkills: ResultSkill[]; // a stringified json array of UserSkill ids
-};
+}
 
-export type ResultWebsite = {
+export interface ResultWebsite {
   type: string;
   url: string;
   logoUrl: string;
-};
+}
 
-export type ContactBoxProps = {
+export interface ContactBoxProps {
   // This element includes the user’s phone, social media, websites, and optionally a form to email the user.
   headline?: string; // sth like ‘Contact me’ or ‘Let’s connect’
   image?: string; // default = the url to the profilePic
   phone?: string;
   websites?: ResultWebsite[];
   hasEmailForm: boolean;
-};
+}
 
-export type BlogPostGalleryProps = {
+export interface BlogPostGalleryProps {
   mediumUsername: string; // simply put in your Medium user name, and the site will automatically pull data and create a gallery
   numPosts: number; // number of blogs to render on the page, max 10. We don't want too much.
   articles: Article[];
-};
+}
 
-export type Article = {
+export interface Article {
   title: string;
   imageUrl: string; // url to the medium post
   minutesRead: number;
@@ -129,9 +130,9 @@ export type Article = {
   articleUrl: string;
   topTag?: string;
   publishedDate: string;
-};
+}
 
-export type ResultProperties = {
+export interface ResultProperties {
   text?: string;
   align?: string;
   embeddedUrl?: string;
@@ -149,9 +150,9 @@ export type ResultProperties = {
   bold?: boolean;
   italics?: boolean;
   underline?: boolean;
-};
+}
 
-export type ResultBlock = {
+export interface ResultBlock {
   id: string;
   pageId: number;
   order: number; // its order among all blocks in the page, not among its siblings
@@ -159,17 +160,17 @@ export type ResultBlock = {
   properties: ResultProperties;
   childrenContent?: TextProps[] | undefined;
   parentId?: string | null;
-};
+}
 
 export async function getBlocksByPageId(pageId: number): Promise<JsonBlock[]> {
-  let blocks = await prisma.block.findMany({
+  const blocks = await prisma.block.findMany({
     where: { AND: [{ pageId }] },
     orderBy: { order: "asc" },
   });
 
   // Parse the properties json strings of each block
   const jsonBlocks = [];
-  for (let origBlock of blocks) {
+  for (const origBlock of blocks) {
     const jsonBlock: JsonBlock = {
       id: origBlock.id,
       pageId: origBlock.pageId,
@@ -249,11 +250,8 @@ async function processSkillsTableBlock(
   userId: number,
 ): Promise<ResultBlock> {
   const techSkills: ResultSkill[] = [];
-  for (let i = 0; i < blockProperties.techSkills.length; i++) {
-    const userSkill = await getUserSkillByUserIdAndSkill(
-      userId,
-      blockProperties.techSkills[i],
-    );
+  for (const techSkill of blockProperties.techSkills) {
+    const userSkill = await getUserSkillByUserIdAndSkill(userId, techSkill);
     if (userSkill) {
       techSkills.push({
         skillName: userSkill.skillName,
@@ -262,11 +260,8 @@ async function processSkillsTableBlock(
     }
   }
   const softSkills: ResultSkill[] = [];
-  for (let i = 0; i < blockProperties.softSkills.length; i++) {
-    const userSkill = await getUserSkillByUserIdAndSkill(
-      userId,
-      blockProperties.softSkills[i],
-    );
+  for (const softSkill of blockProperties.softSkills) {
+    const userSkill = await getUserSkillByUserIdAndSkill(userId, softSkill);
     if (userSkill) {
       softSkills.push({
         skillName: userSkill.skillName,
@@ -364,8 +359,8 @@ export async function processBlogPostGalleryBlock(
         "X-RapidAPI-Host": "medium2.p.rapidapi.com",
       },
     });
-    let userTopArticles: string[] = userTopArticlesRes.data.top_articles;
-    let numArticles = Math.min(
+    const userTopArticles: string[] = userTopArticlesRes.data.top_articles;
+    const numArticles = Math.min(
       10,
       blockProperties.numPosts,
       userTopArticles.length,
@@ -398,7 +393,7 @@ export async function processBlogPostGalleryBlock(
       });
       const articleMarkdown = articleMarkdownRes.data.markdown;
 
-      let indexOfContent =
+      const indexOfContent =
         articleMarkdown.indexOf(articleInfo.image_url) +
         articleInfo.image_url.length +
         1;
@@ -417,7 +412,7 @@ export async function processBlogPostGalleryBlock(
         }),
         contentStart: articleMarkdown
           .substring(indexOfContent, indexOfContent + 300)
-          .replace(/[\#\>]/gi, "")
+          .replace(/[\#\>]/, "")
           .substring(0, 300 - articleInfo.subtitle.length),
         articleUrl: articleInfo.url,
         topTag: articleInfo.tags?.[0],
@@ -452,7 +447,7 @@ async function getBlocksByParentId(
   jsonBlocks: JsonBlock[],
 ): Promise<JsonBlock[]> {
   const childBlocks = [];
-  for (let block of jsonBlocks) {
+  for (const block of jsonBlocks) {
     if (block.parentId && block.parentId === blockId) {
       childBlocks.push(block);
     }
@@ -465,9 +460,9 @@ async function processParentBlock(
   pageBlocks: JsonBlock[],
 ): Promise<ResultBlock> {
   // This is a parent block. In the case of a Paragraph, the text property will be undefined.
-  let childrenBlocks = await getBlocksByParentId(jsonBlock.id, pageBlocks);
-  let childrenContent: TextProps[] = [];
-  for (let childBlock of childrenBlocks) {
+  const childrenBlocks = await getBlocksByParentId(jsonBlock.id, pageBlocks);
+  const childrenContent: TextProps[] = [];
+  for (const childBlock of childrenBlocks) {
     const childProps: JsonProperties = childBlock.properties;
     const resultChildTextProps = {
       text: childProps.text,
