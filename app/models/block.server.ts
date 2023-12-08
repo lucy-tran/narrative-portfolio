@@ -1,4 +1,5 @@
-import axios from "axios";
+import Axios from "axios";
+import { setupCache } from 'axios-cache-interceptor';
 
 import { prisma } from "~/db.server";
 import { getUserSkillByUserIdAndSkill } from "~/models/skill.server";
@@ -7,6 +8,8 @@ import {
   getUrlByUserIdAndWebsiteType,
   getLogoUrlByWebsiteType,
 } from "~/models/website.server";
+
+const axios = setupCache(Axios);
 
 // types from the parsed version of the original block
 export interface JsonSkillsTableProps {

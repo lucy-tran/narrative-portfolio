@@ -27,7 +27,7 @@ export default function SkillsTable({
   }
 
   return (
-    <div className="grid items-center grid-cols-1 md:grid-cols-2 w-full px-8 mx-auto sm:px-10 lg:px-16">
+    <div className="grid items-center grid-cols-1 md:grid-cols-2 w-full px-8 mx-auto sm:px-10 md:px-16 lg:px-24">
       {/* Tech skills */}
       <div className="flex-1 h-full flex flex-col gap-4 border-b-4 md:border-b-0 md:border-r-2 md:border-gray-300">
         <p className="font-serif text-3xl text-center w-full">Tech skills</p>

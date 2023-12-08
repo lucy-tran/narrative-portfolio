@@ -7,8 +7,8 @@ export default function BlogPostGallery({
 }) {
   const articles = properties.articles;
   return (
-    <section className="py-4 bg-gray-50 px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl">
-      <div className="grid max-w-md grid-cols-1 gap-6 mx-auto my-3 lg:grid-cols-3 lg:max-w-full rounded-md">
+    <section className="w-full py-4 px-8 mx-auto sm:px-10 md:px-16 lg:px-24 max-w-7xl rounded-lg">
+      <div className="grid max-w-md grid-cols-1 gap-6 mx-auto my-3 lg:grid-cols-3 lg:max-w-full">
         {articles.map((article: Article, index: number) => {
           return (
             <div

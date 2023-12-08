@@ -8,7 +8,7 @@ export default function HorizontalNavBar({
   currentPage: string;
 }) {
   return (
-    <div className="!bg-white opacity-90 w-full overflow-x-scroll pt-4 pb-4 xl:pr-2 lg:pr-4 m:pr-6 sm:pr-6 ">
+    <div className="bg-white opacity-90 w-screen overflow-x-scroll pt-4 pb-4 xl:pr-2 lg:pr-4 m:pr-6 sm:pr-6 ">
       <div className="z-10 w-full flex xl:justify-center items-center ">
         {pageTitles.map((title, index) => {
           const last = index == pageTitles.length - 1;

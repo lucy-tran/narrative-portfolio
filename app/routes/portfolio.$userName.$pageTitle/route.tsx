@@ -1,6 +1,6 @@
 import type { LoaderFunctionArgs } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { useLoaderData, useNavigation } from "@remix-run/react";
 import invariant from "tiny-invariant";
 
 import BlogPostGallery from "~/components/BlogPostGallery";
@@ -20,7 +20,10 @@ import type {
   TextProps,
 } from "~/models/block.server";
 import { getBlocksByPageId, processBlocks } from "~/models/block.server";
-import { getPageByUserIdAndTitle, getPageTitlesByUserId } from "~/models/page.server";
+import {
+  getPageByUserIdAndTitle,
+  getPageTitlesByUserId,
+} from "~/models/page.server";
 import { getUserByUsername } from "~/models/user.server";
 
 async function loadPageBlocks(
@@ -60,6 +63,8 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
 export default function PortfolioPage() {
   const { pageTitles, currentPage, blocks } = useLoaderData<typeof loader>();
 
+  const navigation = useNavigation();
+
   const nextPageTitle =
     currentPage.order + 1 <= pageTitles.length
       ? pageTitles[currentPage.order] // this is index
@@ -68,6 +73,12 @@ export default function PortfolioPage() {
 
   return (
     <div className="w-full h-full">
+      <div className={"fixed top-0 left-0 right-0 bottom-0 w-full h-screen z-50 overflow-hidden bg-gray-700 opacity-75 flex flex-col items-center justify-center" + (navigation.state === "loading" ? "" : " hidden")}>
+        <div className="animate-spin ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
+        <h2 className="text-center text-white text-xl font-sans">
+          Loading...
+        </h2>
+      </div>
       <header className="relative w-full h-screen">
         <HorizontalNavBar
           pageTitles={pageTitles}
@@ -85,7 +96,7 @@ export default function PortfolioPage() {
           <div className="self-stretch text-center w-full px-4 mx-auto sm:px-6 lg:px-8 bottom-0 relative text-4xl font-serif leading-tight sm:text-5xl lg:text-6xl">
             {currentPage.heroTitle}
           </div>
-          <div className="self-stretch font-light font-sans text-lg w-full px-8 mx-auto sm:px-10 lg:px-16">
+          <div className="self-stretch font-light font-sans text-lg w-full px-8 mx-auto sm:px-10 md:px-16 lg:px-24">
             {currentPage.tldr}
           </div>
           <div className="self-stretch w-full flex justify-center">

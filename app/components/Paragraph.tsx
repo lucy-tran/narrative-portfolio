@@ -33,7 +33,7 @@ export default function Paragraph({
   );
   return (
     <div
-      className={`flex flex-wrap ${direction} w-full px-8 mx-auto sm:px-10 lg:px-16`}
+      className={`flex flex-wrap ${direction} w-full px-8 mx-auto sm:px-10 md:px-16 lg:px-24`}
     >
       {properties.text ? (
         // This is just a normal text block

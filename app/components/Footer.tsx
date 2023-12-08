@@ -11,13 +11,13 @@ export default function Footer({
 
   return (
     <div className="flex flex-row w-full my-8 bg-transparent bottom-8">
-      <div className="flex w-full h-full items-center justify-center gap-2 px-8 py-8 relative bg-transparent">
+      <div className="flex w-full h-full items-center justify-center gap-2 px-8 mx-auto sm:px-10 md:px-16 lg:px-24 py-8 relative bg-transparent">
         <div className="flex items-center gap-4 relative flex-1 self-stretch grow">
           {prevPage && (
             //  Prev button
             <button
               onClick={() => navigate(`../${prevPage}`)}
-              className="flex items-center justify-center gap-2 sm:px-1 md:px-2 lg:px-7 py-2 relative flex-[0_0_auto] bg-white rounded-[8px] hover:-translate-x-4 transition duration-500"
+              className="flex items-center justify-center gap-2 py-2 relative flex-[0_0_auto] bg-white rounded-[8px] hover:-translate-x-4 transition duration-500"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -45,7 +45,7 @@ export default function Footer({
             // Next button
             <button
               onClick={() => navigate(`../${nextPage}`)}
-              className="flex items-center justify-center gap-2 sm:px-1 md:px-2 lg:px-7 py-2 relative flex-[0_0_auto] bg-white rounded-[8px] hover:translate-x-4 transition duration-500"
+              className="flex items-center justify-center gap-2 py-2 relative flex-[0_0_auto] bg-white rounded-[8px] hover:translate-x-4 transition duration-500"
             >
               <div className="relative w-fit font-serif text-3xl whitespace-nowrap">
                 {nextPage === "./" ? "Back to Home" : "Next"}

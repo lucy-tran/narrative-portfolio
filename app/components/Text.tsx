@@ -29,7 +29,7 @@ export default function Text({
   if (childrenContent && Object.keys(properties).length === 0) {
     // This text block has inline stylings
     return (
-      <div className="self-stretch w-full px-8 mx-auto sm:px-10 lg:px-16">
+      <div className="self-stretch w-full px-8 mx-auto sm:px-10 md:px-16 lg:px-24">
         {childrenContent.map((child: ResultProperties, index: number) => {
           const bold = child.bold ? "font-bold" : "";
           const italics = child.italics ? "italic" : "";
@@ -66,7 +66,7 @@ export default function Text({
 
   return (
     <div
-      className={`self-stretch w-full px-8 mx-auto sm:px-10 lg:px-16 font-sans text-black text-${properties.align} ${textClasses}`}
+      className={`self-stretch w-full px-8 mx-auto sm:px-10 md:px-16 lg:px-24 font-sans text-black text-${properties.align} ${textClasses}`}
     >
       {properties.text}
     </div>

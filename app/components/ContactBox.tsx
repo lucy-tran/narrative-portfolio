@@ -8,7 +8,7 @@ export default function ContactBox({
   properties: ContactBoxProps;
 }) {
   return (
-    <div className="flex flex-col w-full lg:w-2/3 gap-4 px-8 mx-auto sm:px-10 lg:px-16 py-4">
+    <div className="flex flex-col w-full lg:w-2/3 gap-4 px-8 mx-auto sm:px-10 md:px-16 lg:px-24 py-4">
       <h2 className="w-full text-center font-serif text-4xl">
         {properties.headline}
       </h2>
