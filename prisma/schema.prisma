@@ -1,0 +1,189 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  name String @unique
+  firstName	String? 
+  lastName String?
+  email String @unique
+  password Password?
+  phone		String?
+  profilePic	String?	// shown on the landing page
+  bio			String?	// used as the big title for the landing page
+  intro		String?
+  pages Page[] @relation("UserPages")
+  chatSimple	String?				// an HTML <script> tag from chatsimple.ai 
+
+  skills	UserSkill[]
+  websites UserWebsite[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Password {
+  hash String
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId Int @unique
+}
+
+model Skill { // a predefined set of skills
+  skillName String	@id
+  description	String?
+  type String // tech skill’ or ‘soft skill’
+  users UserSkill[] @relation("UserSkills")
+}
+
+model UserSkill {
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId Int
+  skill Skill	@relation("UserSkills", fields: [skillName], references: [skillName])
+  skillName String
+  level		String?				// ‘beginner’, ‘intermediate’, ‘advanced’, or ‘expert’
+  @@id([userId, skillName])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Website {
+  type 		String		@id		// can be ‘linkedin’, ‘github’, ‘website’, etc.
+  userWebsites UserWebsite[] @relation("UserWebsites")
+  logoUrl String
+}
+
+model UserWebsite {
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId Int
+  website	Website @relation("UserWebsites", fields: [userWebsiteType], references: [type])	
+  userWebsiteType String
+  url			String
+  @@id([userId, userWebsiteType])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Page {
+  id	Int	@id	 @default(autoincrement())
+  user User @relation("UserPages", fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId	Int	
+  order		Int				// assigned based on user’s ordering of pages
+  title	String @default("Untitled")	// its “name” on the timeline arrow, may be different than title
+  heroTitle		String @default("Untitled")
+  bgImage		String?
+  tldr			String?
+  blocks	Block[] @relation("PageBlocks")
+  pageBlocks 	String @default("[]") // a stringified json array of topmost level block ids
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([userId, order])
+  @@unique([userId, title])
+}
+
+model BlockType { // a predefined set of block types
+  type		String	@id
+  description		String?
+  blocks Block[] @relation("BlockType")
+}
+
+model Block {
+  id	String  @id @default(uuid())// not Int, to avoid possible Int overflow
+  page  Page  @relation("PageBlocks", fields: [pageId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  pageId 		Int
+  order		Int // its order among all blocks in the page, not among its siblings
+  type	BlockType @relation("BlockType", fields:[blockType], references: [type])
+  blockType String
+  properties  String	@default("{}") // a stringified json object
+  children Block[] @relation("NestedBlocks")
+  parent	Block?	@relation("NestedBlocks", fields: [parentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  parentId	String?
+
+  @@unique([pageId, order])
+}
+
+// If a user bold, underline, italicize, embed a link, etc, to a specific part of the current block.
+// we'll break that block into child blocks. 
+model H1 { 	
+  text  String?
+  align String @default("left") // or 'center', 'right', or 'justify'
+  embeddedUrl String?
+  @@ignore	
+}
+
+model H2 { 
+  text  String?
+  align String @default("left")
+  embeddedUrl String?
+  @@ignore	
+}
+
+model H3 {
+  text  String?	
+  align String @default("left")
+  embeddedUrl String?
+  @@ignore
+} 
+
+model Text {
+  text  String?
+  align String @default("left")
+  embeddedUrl String?	
+  @@ignore
+}
+
+model BulletedList {
+  text  String?	
+  align String @default("left")
+  @@ignore
+}
+
+model NumberedList {
+  text  String?	
+  align String @default("left")
+  @@ignore
+}
+
+model Toggle {
+  text  String?	
+  align String @default("left")
+  @@ignore
+}
+
+model Paragraph {
+  text String?
+  align String @default("left")
+  images		String?		// a json array
+  @@ignore
+}
+
+model SkillsTable {	// will be auto-filled based on the User’s skills, but the user can choose to hide/display specific skills in this block
+  techSkills	String  @default("[]")	// a stringified json array of UserSkill ids	
+  softSkills	String		 @default("[]")	// a stringified json array of UserSkill ids	
+  @@ignore
+}
+
+model ContactBox {	 // This element includes the user’s phone, social media, websites, and optionally a form to email the user. 
+  headline		String?				// sth like ‘Contact me’ or ‘Let’s connect’
+  image		String?		// default = the url to the profilePic
+  phone   String?
+  websites	  String	@default("[]")	// a stringified json array of UserWebsite ids
+  hasEmailForm	Boolean	@default(true) // defaut = True
+  @@ignore
+}
+
+model BlogPostGallery {
+  mediumUsername String? // simply put in your Medium user name, and the site will automatically pull data and create a gallery
+  numPosts Int @default(10) // number of blogs to render on the page, max 10. We don't want too much.
+  @@ignore
+}
