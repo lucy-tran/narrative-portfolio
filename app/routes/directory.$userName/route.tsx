@@ -14,20 +14,26 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   return json({ user });
 };
 
-export default function UserOverview() {
+export default function PortfolioOverview() {
   const { user } = useLoaderData<typeof loader>();
   return (
-    <div id="user">
-      <div>
+    <div className="w-full h-full flex flex-wrap justify-center">
+      <Link
+        className="w-48 max-h-64 mr-8 rounded-lg "
+        to={`../../portfolio/${user.name}`}
+      >
         <img
+          className="w-full h-full object-cover"
           alt={`${user.firstName} ${user.lastName}`}
           key={user.profilePic}
-          src={user.profilePic ?? "https://placehold.co/800x600"}
+          src={
+            user.profilePic ??
+            "https://img.icons8.com/cute-clipart/64/gender-neutral-user.png"
+          }
         />
-      </div>
-
-      <div>
-        <h1>
+      </Link>
+      <div className="flex-1 flex flex-col">
+        <h1 className="font-serif text-semibold text-4xl text-gray-700 mt-4 sm:mt-0 mb-4">
           {user.firstName || user.lastName ? (
             <>
               {user.firstName} {user.lastName}
@@ -36,22 +42,19 @@ export default function UserOverview() {
             <i>No Name</i>
           )}{" "}
         </h1>
-
-        {user.intro ? (
-          <div className="mt-4 flex flex-col">
-            <h2 className="font-bold">Introduction:</h2>
-            <p>{user.bio}</p>
-            <p>{user.intro}</p>
-            <p className="leading" />
-          </div>
-        ) : null}
+        {user.bio && (
+          <p className="font-semibold font-sans text-lg text-gray-700 mb-4">
+            {user.bio}
+          </p>
+        )}
+        {user.intro && <p className="font-light font-sans text-lg">{user.intro}</p>}
 
         <div className="mt-4">
           <Link
-            className="text-blue-500 hover:text-blue-700"
+            className="text-blue-500 hover:text-blue-700 text-lg"
             to={`../../portfolio/${user.name}`}
           >
-            Link to my portfolio
+            Check out my portfolio! &rarr;
           </Link>
         </div>
       </div>

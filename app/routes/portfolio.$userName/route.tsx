@@ -13,12 +13,9 @@ export default function UserPortfolio() {
       <motion.main
         className="w-full h-full"
         key={useLocation().pathname}
-        // initial={{ x: "5%", opacity: 0 }}
-        // animate={{ x: "0", opacity: 1 }}
-        // exit={{ y: "5%", opacity: 0 }}
-        initial={{ y: "0.25%", opacity: 0 }}
+        initial={{ x: "0.25%", opacity: 0 }}
         animate={{ y: "0", opacity: 1 }}
-        exit={{ y: "-0.25%", opacity: 0 }}
+        exit={{ x: "-0.25%", opacity: 0 }}
         transition={{ duration: 0.5 }}
       >
         <Outlet />

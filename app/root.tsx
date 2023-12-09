@@ -7,7 +7,9 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useLocation,
 } from "@remix-run/react";
+import { AnimatePresence, motion } from "framer-motion";
 
 import appStylesheet from "~/app.css";
 
@@ -25,13 +27,21 @@ export default function App() {
         <Meta />
         <Links />
       </head>
-      <body className="h-full">
-        <Outlet />
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
-        <script src="https://www.twilik.com/assets/retainable/rss-embed/retainable-rss-embed.js"></script>
-      </body>
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.body
+          className="h-full"
+          key={useLocation().pathname}
+          initial={{ opacity: 0.5 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0.5 }}
+          transition={{ duration: 0.2 }}
+        >
+          <Outlet />
+          <ScrollRestoration />
+          <Scripts />
+          <LiveReload />
+        </motion.body>
+      </AnimatePresence>
     </html>
   );
 }
