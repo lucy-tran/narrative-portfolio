@@ -191,7 +191,7 @@ export default function Directory() {
         </header>
         <div
           id="detail"
-          className="main-content flex flex-col flex-grow p-4"
+          className="main-content flex flex-col flex-grow p-4 lg:cursor-auto"
           onClick={() => setSideBarVisible(false)}
           onKeyDown={() => setSideBarVisible(true)}
           role="button"
