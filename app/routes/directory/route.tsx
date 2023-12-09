@@ -10,6 +10,7 @@ import {
   useLoaderData,
   useNavigation,
   useSubmit,
+  Link,
 } from "@remix-run/react";
 import { useEffect, useState } from "react";
 
@@ -53,7 +54,7 @@ export default function Directory() {
       >
         <div className="sidebar-header flex items-center justify-center py-4">
           <div className="inline-flex">
-            <a href="#" className="inline-flex flex-row items-center">
+            <Link to="/" className="inline-flex flex-row items-center">
               <img
                 width="48"
                 height="48"
@@ -63,7 +64,7 @@ export default function Directory() {
               <span className="leading-10 font-serif text-2xl font-bold ml-1">
                 Narrative Portfolio
               </span>
-            </a>
+            </Link>
           </div>
         </div>
         <Form
@@ -184,7 +185,7 @@ export default function Directory() {
           className="main-content flex flex-col flex-grow p-4"
           onClick={() => setSideBarVisible(false)}
           onKeyDown={() => setSideBarVisible(true)}
-          role="navigation"
+          role="button"
         >
           <h1 className="font-bold font-serif text-3xl pl-1 text-gray-700">
             Portfolio Overview
