@@ -162,9 +162,18 @@ export default function Directory() {
         </div>
       </aside>
       <main className="main flex flex-col flex-grow -ml-64 lg:ml-0 transition-all duration-150 ease-in">
-        <header className="header bg-white shadow py-4 px-4">
+        <header className="header bg-white shadow py-4 px-6 lg:px-4">
           <div className="header-content flex items-center flex-row">
-            <button className="w-8 h-8 lg:hidden border-0 bg-[url('https://img.icons8.com/cute-clipart/64/menu.png')]"/>
+            <button
+              className="border-0 w-8 h-8 lg:hidden"
+              onClick={() => setSideBarVisible(!sideBarVisible)}
+            >
+              <img
+                alt="Menu"
+                src="https://img.icons8.com/cute-clipart/64/menu.png"
+                className="w-full h-full object-cover"
+              />
+            </button>
             <div className="flex ml-auto">
               <button className="border-0 flex flex-row items-center pr-2">
                 <img
