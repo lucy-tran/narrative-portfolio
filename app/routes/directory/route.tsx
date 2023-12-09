@@ -186,6 +186,7 @@ export default function Directory() {
           onClick={() => setSideBarVisible(false)}
           onKeyDown={() => setSideBarVisible(true)}
           role="button"
+          tabIndex={0}
         >
           <h1 className="font-bold font-serif text-3xl pl-1 text-gray-700">
             Portfolio Overview
