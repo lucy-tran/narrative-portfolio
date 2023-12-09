@@ -10,7 +10,6 @@ import {
   useLoaderData,
   useNavigation,
   useSubmit,
-  useLocation,
 } from "@remix-run/react";
 import { useEffect, useState } from "react";
 
@@ -111,16 +110,13 @@ export default function Directory() {
               </span>
             </li>
             <li className="my-px">
-              <a
-                href="#"
-                className="flex flex-row items-center h-10 px-3 rounded-lg text-gray-800 hover:bg-gray-100 hover:text-gray-700"
-              >
+              <button className="w-full flex flex-row items-center h-10 px-3 rounded-lg text-gray-800 hover:bg-gray-100 hover:text-gray-700">
                 <span className="flex items-center justify-center text-lg text-green-400">
                   <svg
                     fill="none"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
                     className="h-6 w-6"
@@ -128,8 +124,8 @@ export default function Directory() {
                     <path d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </span>
-                <span className="text-lg ml-3 font-sans">Add new</span>
-              </a>
+                <span className="text-lg ml-3 font-sans">Create mine</span>
+              </button>
             </li>
             <li className="my-px">
               <span className="flex font-medium text-lg font-sans text-gray-500 px-3 mt-3 mb-1 uppercase">
@@ -167,17 +163,9 @@ export default function Directory() {
       <main className="main flex flex-col flex-grow -ml-64 lg:ml-0 transition-all duration-150 ease-in">
         <header className="header bg-white shadow py-4 px-4">
           <div className="header-content flex items-center flex-row">
-            <img
-              className="w-8 h-8 lg:hidden"
-              src="https://img.icons8.com/cute-clipart/64/menu.png"
-              alt="menu"
-              role="button"
-              onClick={() => {
-                setSideBarVisible(!sideBarVisible);
-              }}
-            />
+            <button className="w-8 h-8 lg:hidden border-0 bg-[url('https://img.icons8.com/cute-clipart/64/menu.png')]"/>
             <div className="flex ml-auto">
-              <a href="#" className="flex flex-row items-center pr-2">
+              <button className="border-0 flex flex-row items-center pr-2">
                 <img
                   width="64"
                   height="64"
@@ -187,7 +175,7 @@ export default function Directory() {
                 <span className="font-semibold font-sans leading-none ml-2">
                   John Doe
                 </span>
-              </a>
+              </button>
             </div>
           </div>
         </header>
@@ -195,6 +183,8 @@ export default function Directory() {
           id="detail"
           className="main-content flex flex-col flex-grow p-4"
           onClick={() => setSideBarVisible(false)}
+          onKeyDown={() => setSideBarVisible(true)}
+          role="navigation"
         >
           <h1 className="font-bold font-serif text-3xl pl-1 text-gray-700">
             Portfolio Overview
