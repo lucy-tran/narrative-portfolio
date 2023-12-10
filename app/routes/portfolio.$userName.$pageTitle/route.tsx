@@ -1,15 +1,15 @@
-import type { LoaderFunctionArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData, useNavigation } from "@remix-run/react";
 import invariant from "tiny-invariant";
 
-import BlogPostGallery from "~/components/BlogPostGallery";
-import ContactBox from "~/components/ContactBox";
+import BlogPostGallery from "~/components/blocks/BlogPostGallery";
+import ContactBox from "~/components/blocks/ContactBox";
+import Paragraph from "~/components/blocks/Paragraph";
+import SkillsTable from "~/components/blocks/SkillsTable";
+import Text from "~/components/blocks/Text";
 import Footer from "~/components/Footer";
 import HorizontalNavBar from "~/components/HorizontalNavBar";
-import Paragraph from "~/components/Paragraph";
-import SkillsTable from "~/components/SkillsTable";
-import Text from "~/components/Text";
 import type {
   BlogPostGalleryProps,
   ContactBoxProps,
@@ -60,6 +60,14 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   return json({ user, pageTitles, currentPage, blocks });
 };
 
+export const meta: MetaFunction<typeof loader> = ({ data }) => [
+  {
+    title:
+      `${data?.user.firstName} ${data?.user.lastName} |` +
+      " Narrative Portfolio",
+  },
+];
+
 export default function PortfolioPage() {
   const { pageTitles, currentPage, blocks } = useLoaderData<typeof loader>();
 
@@ -73,17 +81,20 @@ export default function PortfolioPage() {
 
   return (
     <div className="w-full h-full">
-      <div className={"fixed top-0 left-0 right-0 bottom-0 w-full h-screen z-50 overflow-hidden bg-gray-700 opacity-75 flex flex-col items-center justify-center" + (navigation.state === "loading" ? "" : " hidden")}>
+      <div
+        className={
+          "fixed top-0 left-0 right-0 bottom-0 w-full h-screen z-50 overflow-hidden bg-gray-700 opacity-75 flex flex-col items-center justify-center" +
+          (navigation.state === "loading" ? "" : " hidden")
+        }
+      >
         <div className="animate-spin ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
-        <h2 className="text-center text-white text-xl font-sans">
-          Loading...
-        </h2>
+        <h2 className="text-center text-white text-xl font-sans">Loading...</h2>
       </div>
+      <HorizontalNavBar
+        pageTitles={pageTitles}
+        currentPage={currentPage.title}
+      />
       <header className="relative w-full h-screen">
-        <HorizontalNavBar
-          pageTitles={pageTitles}
-          currentPage={currentPage.title}
-        />
         <img
           src={
             currentPage.bgImage ??
@@ -100,20 +111,27 @@ export default function PortfolioPage() {
             {currentPage.tldr}
           </div>
           <div className="self-stretch w-full flex justify-center">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={4}
-              stroke="currentColor"
-              className="animate-bounce w-8 sm:w-10 lg:w-12 h-auto stroke-gray-300"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M19.5 8.25l-7.5 7.5-7.5-7.5"
-              />
-            </svg>
+            <button
+              onClick={() =>
+                window.scrollTo({ top: window.innerHeight, behavior: "smooth" })
+              }
+              className="animate-bounce w-8 sm:w-10 lg:w-12 h-auto"
+              >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={4}
+                stroke="currentColor"
+                className="stroke-gray-300"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M19.5 8.25l-7.5 7.5-7.5-7.5"
+                />
+              </svg>
+            </button>
           </div>
         </div>
       </header>

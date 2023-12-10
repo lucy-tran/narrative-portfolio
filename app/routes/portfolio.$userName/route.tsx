@@ -13,10 +13,6 @@ export default function UserPortfolio() {
       <motion.main
         className="w-full h-full"
         key={useLocation().pathname}
-        initial={{ x: "0.25%", opacity: 0 }}
-        animate={{ y: "0", opacity: 1 }}
-        exit={{ x: "-0.25%", opacity: 0 }}
-        transition={{ duration: 0.5 }}
       >
         <Outlet />
         <ScrollRestoration />

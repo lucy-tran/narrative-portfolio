@@ -42,12 +42,10 @@ export default function PortfolioOverview() {
             <i>No Name</i>
           )}{" "}
         </h1>
-        {user.bio && (
-          <p className="font-semibold font-sans text-lg text-gray-700 mb-4">
+        {user.bio ? <p className="font-semibold font-sans text-lg text-gray-700 mb-4">
             {user.bio}
-          </p>
-        )}
-        {user.intro && <p className="font-light font-sans text-lg">{user.intro}</p>}
+          </p> : null}
+        {user.intro ? <p className="font-light font-sans text-lg">{user.intro}</p> : null}
 
         <div className="mt-4">
           <Link

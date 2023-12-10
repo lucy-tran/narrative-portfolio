@@ -1,5 +1,5 @@
 import { cssBundleHref } from "@remix-run/css-bundle";
-import type { LinksFunction } from "@remix-run/node";
+import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -16,6 +16,12 @@ import appStylesheet from "~/app.css";
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: appStylesheet },
   ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
+];
+
+export const meta: MetaFunction = () => [
+  { charset: "utf-8" },
+  { title: "Narrative Portfolio" },
+  { name: "viewport", content: "width=device-width,initial-scale=1" },
 ];
 
 export default function App() {

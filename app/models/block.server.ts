@@ -1,5 +1,5 @@
 import Axios from "axios";
-import { setupCache } from 'axios-cache-interceptor';
+import { setupCache } from "axios-cache-interceptor";
 
 import { prisma } from "~/db.server";
 import { getUserSkillByUserIdAndSkill } from "~/models/skill.server";

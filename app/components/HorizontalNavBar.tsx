@@ -1,4 +1,7 @@
 import { Link } from "@remix-run/react";
+import { useEffect, useState } from "react";
+
+let hydrating = true;
 
 export default function HorizontalNavBar({
   pageTitles,
@@ -7,8 +10,54 @@ export default function HorizontalNavBar({
   pageTitles: string[];
   currentPage: string;
 }) {
+  const [hydrated, setHydrated] = useState(() => !hydrating);
+  let scrollLeftRef = 0;
+  // let scrollLeftRef = useRef(0);
+
+  useEffect(() => {
+    hydrating = false;
+    setHydrated(true);
+
+    if (hydrated) {
+      let lastScroll = 0;
+      window.addEventListener("scroll", () => {
+        const navbar = document.querySelector("#navbar");
+        navbar?.scrollTo(0, scrollLeftRef);
+        const currentScroll = window.scrollY;
+        console.log(currentScroll);
+        if (currentScroll <= 0) {
+          navbar?.classList.remove("scroll-up");
+        }
+
+        if (
+          currentScroll > lastScroll &&
+          !navbar?.classList.contains("scroll-down")
+        ) {
+          navbar?.classList.remove("scroll-up");
+          navbar?.classList.add("scroll-down");
+        }
+
+        if (
+          currentScroll < lastScroll &&
+          navbar?.classList.contains("scroll-down")
+        ) {
+          navbar?.classList.remove("scroll-down");
+          navbar?.classList.add("scroll-up");
+        }
+
+        lastScroll = currentScroll;
+      });
+    }
+  }, [hydrated]);
+
   return (
-    <div className="bg-white opacity-90 w-screen overflow-x-scroll pt-4 pb-4 xl:pr-2 lg:pr-4 m:pr-6 sm:pr-6 ">
+    <div
+      id="navbar"
+      className="fixed top-0 left-0 z-50 bg-white opacity-90 w-screen overflow-x-scroll pt-4 pb-4 xl:pr-2 lg:pr-4 m:pr-6 sm:pr-6 transition-transform duration-500"
+      onScroll={(event: React.BaseSyntheticEvent) => {
+        scrollLeftRef = event.target.scrollLeft;
+      }}
+    >
       <div className="z-10 w-full flex xl:justify-center items-center ">
         {pageTitles.map((title, index) => {
           const last = index == pageTitles.length - 1;
@@ -32,7 +81,7 @@ export default function HorizontalNavBar({
                 <span className="h-2 w-full bg-gray-300 rounded-full" />
                 {/* )} */}
               </div>
-              {last && (
+              {last ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -47,7 +96,7 @@ export default function HorizontalNavBar({
                     d="M8.25 4.5l7.5 7.5-7.5 7.5"
                   />
                 </svg>
-              )}
+              ) : null}
             </div>
           );
         })}

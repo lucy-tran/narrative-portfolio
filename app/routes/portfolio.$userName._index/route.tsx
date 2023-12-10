@@ -1,4 +1,4 @@
-import type { LoaderFunctionArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { useLoaderData, Link } from "@remix-run/react";
 import invariant from "tiny-invariant";
@@ -15,6 +15,10 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   const nextPageTitle = await getPageTitleByUserIdAndOrder(user.id, 1);
   return json({ user, nextPageTitle });
 };
+
+export const meta: MetaFunction<typeof loader> = ({data}) => [
+  { title: `${data?.user.firstName} ${data?.user.lastName} |` +  " Narrative Portfolio" },
+];
 
 export default function PortfolioHome() {
   const { user, nextPageTitle } = useLoaderData<typeof loader>();

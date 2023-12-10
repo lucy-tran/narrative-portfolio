@@ -1,5 +1,5 @@
 import { json } from "@remix-run/node";
-import type { LoaderFunctionArgs } from "@remix-run/node";
+import type { LoaderFunctionArgs, MetaFunction } from "@remix-run/node";
 import {
   Form,
   NavLink,
@@ -25,6 +25,10 @@ export const loader = async ({ request }: LoaderFunctionArgs) => {
   return json({ users, q });
 };
 
+export const meta: MetaFunction<typeof loader> = () => [
+  { title: "Directory | Narrative Portfolio" },
+];
+
 export default function Directory() {
   const { users, q } = useLoaderData<typeof loader>();
   const navigation = useNavigation();
@@ -46,10 +50,10 @@ export default function Directory() {
     <body className="w-full h-screen">
       <aside
         className={
-          "shrink-0 h-full sidebar w-64 lg:shadow transform transition-transform duration-150 ease-in bg-gray-50" +
+          "shrink-0 h-full w-64 shadow-lg transform transition-transform duration-150 ease-in bg-gray-50" +
           (sideBarVisible
-            ? " translate-x-0"
-            : " -translate-x-full lg:translate-x-0")
+            ? " translate-x-0 shadow-lg"
+            : " -translate-x-full lg:translate-x-0 shadow-none")
         }
       >
         <div className="sidebar-header flex items-center justify-center py-4">

@@ -30,14 +30,12 @@ export default function BlogPostGallery({
                       alt=""
                     />
                   </a>
-                  {article.topTag && (
-                    <div className="absolute top-4 left-4">
+                  {article.topTag ? <div className="absolute top-4 left-4">
                       <span className="px-4 py-2 text-xs font-semibold font-sans tracking-widest text-gray-900 uppercase bg-white rounded-full">
                         {" "}
                         {article.topTag}{" "}
                       </span>
-                    </div>
-                  )}
+                    </div> : null}
                 </div>
                 <span className="block mt-6 text-sm font-sans font-semibold tracking-widest text-gray-500 uppercase">
                   {" "}

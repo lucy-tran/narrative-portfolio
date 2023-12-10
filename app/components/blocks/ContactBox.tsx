@@ -15,8 +15,7 @@ export default function ContactBox({
       <div className="w-full bg-red-200 h-1 rounded-full drop-shadow-md" />
       <div className="flex flex-wrap-reverse">
         <div className="flex-1 flex flex-col gap-2">
-          {properties.phone && (
-            <div className="w-full inline-flex">
+          {properties.phone ? <div className="w-full inline-flex">
               <img
                 src="https://img.icons8.com/ios/100/apple-phone.png"
                 className="w-8 h-8"
@@ -25,8 +24,7 @@ export default function ContactBox({
               <p className="font-sans font-light text-lg pl-4">
                 {properties.phone}
               </p>
-            </div>
-          )}
+            </div> : null}
           {properties.websites?.map(
             (website: { logoUrl: string; url: string }, index: number) => (
               <div key={index} className="w-full inline-flex items-center">
